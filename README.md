@@ -24,7 +24,11 @@ Methods:
 - deleteOne(id: String): Server
 ### VoucherManager
 Methods:
-
+- getAll(): Voucher[]
+- getOne(id: Number): Voucher
+- createOne(values: { memo?: String, expires_at?: String, code: String, uses: Number, credits: Number }): Voucher
+- updateOne(id: Number, newValues: { memo?: String, expires_at?: String, code: String, uses: Number, credits: Number }): Voucher
+- deleteOne(id: Number): Voucher
 ### User
 Properties
 - id: Number

@@ -24,7 +24,7 @@ class VoucherManager {
 
     /**
      * Return a single Voucher object for the specified Voucher
-     * @param {String} id The ID of the voucher
+     * @param {Number} id The ID of the voucher
      * @returns {Promise<Voucher>}
      */
     async getOne(id) {
@@ -64,7 +64,7 @@ class VoucherManager {
 
     /**
      * Delete the specified voucher
-     * @param {String} id The ID of the voucher
+     * @param {Number} id The ID of the voucher
      * @returns {Promise<Voucher>}
      */
     async deleteOne(id) {
