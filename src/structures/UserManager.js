@@ -1,4 +1,5 @@
 const ControlPanel = require("../ControlPanel");
+const User = require("./User")
 
 class UserManager {
     /**
@@ -10,19 +11,25 @@ class UserManager {
 
     /**
      * Get an array of all User objects
-     * @returns {Promise<object[]>}
+     * @returns {Promise<User[]>}
      */
     async getAll() {
-        return (await (await this.control._request("/users", "GET")).json()).data;
+        const userArray = (await (await this.control._request("/users", "GET")).json()).data;
+        const users = [];
+        for (const data of userArray) {
+            users.push(new User(data));
+        }
+        return users;
     }
 
     /**
      * Return a single User object for the specified User
      * @param {String} id The ID of the user. This can be their CP ID, or Discord ID
-     * @returns {Promise<object>}
+     * @returns {Promise<User>}
      */
     async getOne(id) {
-        return (await this.control._request(`/users/${id}`, "GET")).json();
+        const data = await (await this.control._request(`/users/${id}`, "GET")).json();
+        return new User(data);
     }
 
     /**
@@ -34,21 +41,23 @@ class UserManager {
      * @param {Number?} newValues.credits The new number of credits for the user. Between 0 and 1000000
      * @param {Number?} newValues.server_limit The new server limit for the user. Between 0 and 1000000
      * @param {String?} newValues.role The new role for the user. One from `admin`, `mod`, `client`, `member`
-     * @returns {Promise<object>}
+     * @returns {Promise<User>}
      */
     async updateOne(id, newValues = {}) {
         // work around for patch request with form-data not updating the user
         newValues["_method"] = "patch";
-        return (await this.control._request(`/users/${id}`, "POST", newValues)).json();
+        const data = await (await this.control._request(`/users/${id}`, "POST", newValues)).json();
+        return new User(data);
     }
 
     /**
      * Delete a single user
      * @param {String} id The ID of the user. This can be their CP ID, or Discord ID
-     * @returns {Promise<object>}
+     * @returns {Promise<User>}
      */
     async deleteOne(id) {
-        return (await this.control._request(`/users/${id}`, "DELETE")).json();
+        const data = await (await this.control._request(`/users/${id}`, "DELETE")).json();
+        return new User(data);
     }
 }
 

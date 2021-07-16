@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 const formdata = require("form-data");
 const ServerManager = require("./structures/ServerManager");
 const UserManager = require("./structures/UserManager");
+const VoucherManager = require("./structures/VoucherManager");
 
 class ControlPanel {
     /**
@@ -14,6 +15,7 @@ class ControlPanel {
 
         this.userManager = new UserManager(this);
         this.serverManager = new ServerManager(this);
+        this.voucherManager = new VoucherManager(this);
     }
 
     /**
@@ -23,10 +25,21 @@ class ControlPanel {
      * @param {JSON} bodyJSON The body of the request
      * @returns {Promise<any>}
      */
-    async _request(endpoint, method = "GET", bodyJSON = {}) {
-        const body = new formdata();
-        for await (const [name, value] of Object.entries(bodyJSON)) {
-            body.append(name, value);
+    async _request(endpoint, method = "GET", bodyJSON = {}, bodyType = "formdata") {
+        if (bodyType == "formdata") {
+            var body = new formdata();
+            for await (const [name, value] of Object.entries(bodyJSON)) {
+                body.append(name, value);
+            }
+        }
+        else if (bodyType == "urlencoded") {
+            const formBody = [];
+            for (const property in bodyJSON) {
+                const encodedKey = encodeURIComponent(property);
+                const encodedValue = encodeURIComponent(bodyJSON[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            var body = formBody.join("&");
         }
         return await fetch(`${this.apiURL}${endpoint}`,
             {

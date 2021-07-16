@@ -8,6 +8,7 @@ Properties
 - token: String
 - userManager: UserManager
 - serverManager: ServerManager
+- voucherManager: VoucherManager
 ### UserManager
 Methods:
 - getAll(): User[]
@@ -21,6 +22,66 @@ Methods:
 - suspendOne(id: String): Server
 - unsuspendOne(id: String): Server
 - deleteOne(id: String): Server
+### VoucherManager
+Methods:
+
+### User
+Properties
+- id: Number
+- name: String
+- role: String
+- credits: Number
+- serverLimit: Number
+- pterodactylID: Number
+- avatar?: String
+- email: String
+- emailVerifiedAt?: String
+- createdAt: String
+- updatedAt: String
+- ip: String
+- lastSeen: String
+- discordVerifiedAt?: String
+### Server
+Properties
+- id: String
+- name: String
+- description: String
+- suspended?: String
+- identifier: String
+- pterodactylID: Number
+- ownerID: Number
+- createdAt: String
+- updatedAt: String
+- product: Product
+### Product
+Properties
+- id: String
+- name: String
+- description: String
+- price: Number
+- memory: Number
+- cpu: Number
+- swap: Number
+- disk: Number
+- io: Number
+- databaseLimit: Number
+- backupLimit: Number
+- allocationLimit: Number
+- createdAt: String
+- updatedAt: String
+- disabled: Number
+### Voucher
+Properties
+- id: Number
+- code: String
+- memo: String
+- credits: Number
+- uses: Number
+- expiresAt: String
+- createdAt: String
+- updatedAt: String
+- used: Number
+- status: String
 
 ## Example Usage
 ```js
