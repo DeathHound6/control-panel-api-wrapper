@@ -23,7 +23,7 @@ class ControlPanel {
      * @param {String} endpoint The resource being requested
      * @param {String} method The method of the request
      * @param {JSON} bodyJSON The body of the request
-     * @returns {Promise<any>}
+     * @returns {Promise<Object<string, any>>}
      */
     async _request(endpoint, method = "GET", bodyJSON = {}, bodyType = "formdata") {
         if (bodyType == "formdata") {
@@ -37,7 +37,7 @@ class ControlPanel {
             for (const property in bodyJSON) {
                 const encodedKey = encodeURIComponent(property);
                 const encodedValue = encodeURIComponent(bodyJSON[property]);
-                formBody.push(encodedKey + "=" + encodedValue);
+                formBody.push(`${encodedKey}=${encodedValue}`);
             }
             var body = formBody.join("&");
         }
