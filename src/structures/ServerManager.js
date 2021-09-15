@@ -26,9 +26,11 @@ class ServerManager {
      * Return a single Server object for the specified Server
      * @param {String} id The external ID of the server
      * @returns {Promise<Server>}
+     * @throws Error
      */
     async getOne(id) {
         const data = await (await this.control._request(`/servers/${id}`, "GET")).json();
+        if (data.message) throw new Error(data.message);
         return new Server(data);
     }
 
@@ -36,9 +38,11 @@ class ServerManager {
      * Suspend the provided server
      * @param {String} id The external ID of the server
      * @returns {Promise<Server>}
+     * @throws Error
      */
     async suspendOne(id) {
         const data = await (await this.control._request(`/servers/${id}/suspend`, "PATCH")).json();
+        if (data.message) throw new Error(data.message);
         return new Server(data);
     }
 
@@ -46,9 +50,11 @@ class ServerManager {
      * Unsuspend the provided server
      * @param {String} id The external ID of the server
      * @returns {Promise<Server>}
+     * @throws Error
      */
     async unsuspendOne(id) {
         const data = await (await this.control._request(`/servers/${id}/unsuspend`, "PATCH")).json();
+        if (data.message) throw new Error(data.message);
         return new Server(data);
     }
 
@@ -56,9 +62,11 @@ class ServerManager {
      * Delete the specified server
      * @param {String} id The external ID of the server
      * @returns {Promise<Server>}
+     * @throws Error
      */
     async deleteOne(id) {
         const data = await (await this.control._request(`/servers/${id}`, "DELETE")).json();
+        if (data.message) throw new Error(data.message);
         return new Server(data);
     }
 }

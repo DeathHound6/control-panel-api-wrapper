@@ -45,7 +45,7 @@ class ControlPanel {
             {
                 method,
                 body: ["GET", "HEAD"].includes(method) ? null : body,
-                headers: { AUTHORIZATION: `Bearer ${this.token}` }
+                headers: { AUTHORIZATION: `Bearer ${this.token}`, Accept: "application/json" }
             }
         );
     }
